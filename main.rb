@@ -31,7 +31,7 @@ def put_or_post path, opts={}, &block
 end
 
 put_or_post '/api/*' do
-  api_path = params[:splat].first
+  api_path = params[:splat].first.gsub(/^0\//, '')
   cmd={
     bridgeid: BRIDGEID,
     clipCommand: {

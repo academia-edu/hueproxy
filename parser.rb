@@ -4,8 +4,9 @@ require 'color'
 class ColorParser < Parslet::Parser
 
   root :color
-  rule(:color) { rgb_hex | rgb_fun | hsl_fun }
+  rule(:color) { rgb_hex | rgb_fun | hsl_fun | named.as(:named) }
 
+  rule(:named) { Color::RGB.send(:__by_name).keys.map { |color| str(color) }.reduce(:|) }
   rule(:hex_digit) { match('[0-9a-fA-F]') }
   rule(:rgb_hex) { str('#') >> (rgb_hex_long | rgb_hex_short) }
   rule(:rgb_hex_short) { hex_digit.as(:hex_digit).as(:red) >> hex_digit.as(:hex_digit).as(:green) >> hex_digit.as(:hex_digit).as(:blue) }
@@ -35,4 +36,6 @@ class ColorTransformer < Parslet::Transform
   rule(red: simple(:red), green: simple(:green), blue: simple(:blue)) { Color::RGB.new(red, green, blue) }
 
   rule(hue: simple(:hue), sat: simple(:sat), lum: simple(:lum)) { Color::HSL.new(hue.to_i, sat.to_i, lum.to_i) }
+
+  rule(named: simple(:name)) { Color::RGB.by_name(name) }
 end

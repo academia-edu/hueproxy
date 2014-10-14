@@ -65,7 +65,7 @@ put '/huep/api/lights/:n' do
   color = ColorTransformer.new.apply(ColorParser.new.parse(body))
   hsl = color.to_hsl
 
-  cmd = { hue: (hsl.h * 65535.0).to_i, sat: (hsl.s * 255).to_i, bri: (hsl.l * 255).to_i }
+  cmd = { on: true, hue: (hsl.h * 65535.0).to_i, sat: (hsl.s * 255).to_i, bri: (hsl.l * 255).to_i }
   hue_response = send_command "PUT", "lights/#{params[:n]}/state", cmd
   content_type :json
   JSON.dump(hue_response)

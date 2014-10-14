@@ -1,0 +1,22 @@
+{
+  "name": "hueproxy",
+  "description": "Auth proxy for the Philips Hue light",
+  "keywords": [
+    "hue",
+    "lights",
+    "led"
+  ],
+  "repository": "https://github.com/academia-edu/hueproxy",
+  "env": {
+    "HUE_BRIDGEID": {
+      "description": "Bridge Id from  https://www.meethue.com/api/nupnp.",
+      "required": true
+    },
+    "HUE_ACCESSTOKEN": {
+      "description": "Access token from masquerading as an the iOS hue app.",
+      "required": true
+    },
+    "RACK_ENV": "production",
+    "LANG": "en_US.UTF-8"
+  }
+}
